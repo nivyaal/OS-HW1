@@ -1,0 +1,17 @@
+ls &
+jobs
+sleep 500&
+sleep 100 &
+jobs
+kill -9 1
+jobs
+kill -9 3
+kill -80 2
+kill -9 abc
+kill -9 50
+  sleep 500    &
+kill -9 1   a
+kill -9
+kill -9 1
+kill -9 2
+kill -9 3

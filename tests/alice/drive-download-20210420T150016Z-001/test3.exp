@@ -1,0 +1,25 @@
+smash> byeush
+Desktop
+Documents
+Downloads
+hiush
+Music
+Pictures
+Public
+smash
+Templates
+Videos
+smash> smash> smash> [1] sleep 500& : 2 2 secs
+[2] sleep 100 & : 3 1 secs
+smash> signal number 9 was sent to pid 2
+smash> [2] sleep 100 & : 3 3 secs
+smash> smash error: kill: job-id 3 does not exist
+smash> smash error: kill failed: Invalid argument
+smash> smash error: kill: invalid arguments
+smash> smash error: kill: job-id 50 does not exist
+smash> smash> smash error: kill: invalid arguments
+smash> smash error: kill: invalid arguments
+smash> smash error: kill: job-id 1 does not exist
+smash> signal number 9 was sent to pid 3
+smash> signal number 9 was sent to pid 4
+smash> 

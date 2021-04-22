@@ -1,0 +1,14 @@
+cp a b
+cp Makefile wtf
+diff wtf Makefile
+cp Makefile nodir/wut
+cp Makefile /home/student/hiush
+cd /home/student/
+cp hiush byeush
+cp hiush smash/hiiii
+cd smash
+cp test2.in cptest1
+cp test4.in cptest2
+cp cptest1 cptest2
+diff cptest1 cptest2
+cd -

@@ -1,0 +1,21 @@
+smash: got ctrl-Z
+smash: process 9 was stopped
+smash> signal number 9 was sent to pid 9
+smash> smash error: bg: there is no stopped jobs to resume
+smash> smash error: bg: there is no stopped jobs to resume
+smash> smash error: bg: invalid arguments
+smash> smash error: bg: invalid arguments
+smash> smash error: bg: invalid arguments
+smash> smash error: bg: job-id 1 does not exist
+smash> smash> smash error: bg: job-id 1 is already running in the background
+smash> smash: got ctrl-Z
+smash: process 10 was stopped
+smash> smash: got ctrl-Z
+smash: process 11 was stopped
+smash> sleep 200 : 10
+smash> [1] sleep 100& : 12 7 secs
+[2] sleep 200 : 10 4 secs
+[3] sleep 300 : 11 2 secs (stopped)
+vvv showpid should say 1 vvv
+smash> smash pid is 1
+smash> 

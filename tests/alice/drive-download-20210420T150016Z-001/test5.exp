@@ -1,0 +1,267 @@
+smash> Commands.cpp
+Commands.h
+cptest1
+cptest2
+hiiii
+Makefile
+out
+signals.cpp
+signals.h
+smash
+smash.cpp
+test1.exp
+test1.in
+test2.exp
+test2.in
+test3.exp
+test3.in
+test4.exp
+test4.in
+test5.exp
+test5.in
+test6.exp
+test6.in
+test7.exp
+test7.in
+test.py
+t.sh
+wtf
+smash> smash> byeush
+Desktop
+Documents
+Downloads
+hiush
+Music
+Pictures
+Public
+smash
+Templates
+Videos
+smash> byeush
+Desktop
+Documents
+Downloads
+hiush
+Music
+Pictures
+Public
+smash
+Templates
+Videos
+smash> byeush
+Desktop
+Documents
+Downloads
+hiush
+Music
+Pictures
+Public
+smash
+Templates
+Videos
+smash> byeush
+Desktop
+Documents
+Downloads
+hiush
+Music
+Pictures
+Public
+smash
+Templates
+Videos
+smash> byeush
+Desktop
+Documents
+Downloads
+hiush
+Music
+Pictures
+Public
+smash
+Templates
+Videos
+smash> byeush
+Desktop
+Documents
+Downloads
+hiush
+Music
+Pictures
+Public
+smash
+Templates
+Videos
+smash> byeush
+Desktop
+Documents
+Downloads
+hiush
+Music
+Pictures
+Public
+smash
+Templates
+Videos
+smash> bash: historys: command not found
+smash> byeush
+Desktop
+Documents
+Downloads
+hiush
+Music
+Pictures
+Public
+smash
+Templates
+Videos
+smash>    34  ls &
+   35  jobs
+   36  sleep 500&
+   37  sleep 100 &
+   38  jobs
+   39  kill -9 1
+   40  jobs
+   41  kill -9 3
+   42  kill -80 2
+   43  kill -9 abc
+   44  kill -9 50
+   45    sleep 500    &
+   46  kill -9 1   a
+   47  kill -9
+   48  kill -9 1
+   49  kill -9 2
+   50  kill -9 3
+   51  fg
+   52  fg 1
+   53  sleep 1000&
+   54   sleep 5   &
+   55  sleep 3000&
+   56  fg 2
+   57  jobs
+   58  fg 4
+   59  fg -1
+   60  jobs
+   61  sleep 90&
+   62  sleep 1
+   63  jobs
+   64  fg 1 abc
+   65  fg ab
+   66       fg     ab           
+   67  fg 1
+   68  sleep 1
+   69  jobs
+   70  fg 3
+   71  jobs
+   72  fg 1
+   73  fg 2
+   74  fg 3
+   75  fg 4
+   76  jobs
+   77  cd /home/student/smash
+   78  ls
+   79  cd /home/student/
+   86  ls
+   87  historys
+   88  ls
+   89  history a b
+smash> byeush
+Desktop
+Documents
+Downloads
+hiush
+Music
+Pictures
+Public
+smash
+Templates
+Videos
+smash> byeush
+Desktop
+Documents
+Downloads
+hiush
+Music
+Pictures
+Public
+smash
+Templates
+Videos
+smash>    36  sleep 500&
+   37  sleep 100 &
+   38  jobs
+   39  kill -9 1
+   40  jobs
+   41  kill -9 3
+   42  kill -80 2
+   43  kill -9 abc
+   44  kill -9 50
+   45    sleep 500    &
+   46  kill -9 1   a
+   47  kill -9
+   48  kill -9 1
+   49  kill -9 2
+   50  kill -9 3
+   51  fg
+   52  fg 1
+   53  sleep 1000&
+   54   sleep 5   &
+   55  sleep 3000&
+   56  fg 2
+   57  jobs
+   58  fg 4
+   59  fg -1
+   60  jobs
+   61  sleep 90&
+   62  sleep 1
+   63  jobs
+   64  fg 1 abc
+   65  fg ab
+   66       fg     ab           
+   67  fg 1
+   68  sleep 1
+   69  jobs
+   70  fg 3
+   71  jobs
+   72  fg 1
+   73  fg 2
+   74  fg 3
+   75  fg 4
+   76  jobs
+   77  cd /home/student/smash
+   78  ls
+   79  cd /home/student/
+   86  ls
+   87  historys
+   88  ls
+   89  history a b
+   91  ls
+   92  history
+smash> smash> smash> smash> Commands.cpp
+Commands.h
+cptest1
+cptest2
+Makefile
+out
+signals.cpp
+signals.h
+smash
+smash.cpp
+test1.exp
+test1.in
+test2.exp
+test2.in
+test3.exp
+test3.in
+test4.exp
+test4.in
+test5.exp
+test5.in
+test6.exp
+test6.in
+test7.exp
+test7.in
+test.py
+t.sh
+wtf
+smash> 

@@ -1,0 +1,122 @@
+smash> bash: adksada: command not found
+smash> bash: adlsksld: command not found
+smash> bash: sakds: command not found
+smash> bash: lsakda: command not found
+smash> smash> [1] sleep 100& : 12 17 secs
+[2] sleep 200 : 10 14 secs
+[3] sleep 300 : 11 12 secs (stopped)
+[9] sleep 5 & : 13 1 secs
+smash>    63  jobs
+   64  fg 1 abc
+   65  fg ab
+   66       fg     ab           
+   67  fg 1
+   68  sleep 1
+   69  jobs
+   70  fg 3
+   71  jobs
+   72  fg 1
+   73  fg 2
+   74  fg 3
+   75  fg 4
+   76  jobs
+   77  cd /home/student/smash
+   78  ls
+   79  cd /home/student/
+   86  ls
+   87  historys
+   88  ls
+   89  history a b
+   91  ls
+   92  history
+   93  rm *ush
+   94  cd smash
+   95  rm hii?i
+   96  ls
+   97  sleep 500
+   98  kill -9 1
+   99  bg
+  100        bg
+  101  bg abc
+  102   bg -5
+  103  bg 1 a
+  104  bg 1
+  105  sleep 100&
+  106  bg 1
+  107  sleep 200
+  108  sleep 300
+  109  bg 2
+  110  jobs
+  111  showpid
+  112  adksada &
+  113  adlsksld &
+  114  sakds &
+  115  lsakda &
+  116  sleep 1 &
+  117  sleep 5 &
+  118  jobs
+  119  history
+smash> smash> bash: asldka: command not found
+bash: kdsflf: command not found
+smash> smash> bash: daldk: command not found
+[1] sleep 100& : 12 22 secs
+[2] sleep 200 : 10 19 secs
+[3] sleep 300 : 11 17 secs (stopped)
+smash> smash> bash: abc: command not found
+smash: got ctrl-Z
+smash: process 14 was stopped
+smash> [1] sleep 100& : 12 26 secs
+[2] sleep 200 : 10 23 secs
+[3] sleep 300 : 11 21 secs (stopped)
+[5] sleep 20 : 14 1 secs (stopped)
+smash> sleep 20 : 14
+smash: got ctrl-Z
+smash: process 14 was stopped
+smash> [1] sleep 100& : 12 29 secs
+[2] sleep 200 : 10 26 secs
+[3] sleep 300 : 11 24 secs (stopped)
+[5] sleep 20 : 14 1 secs (stopped)
+smash> sleep 20 : 14
+smash: got ctrl-Z
+smash: process 14 was stopped
+smash> sleep 20 : 14
+smash: got ctrl-Z
+smash: process 14 was stopped
+smash> [1] sleep 100& : 12 34 secs
+[2] sleep 200 : 10 31 secs
+[3] sleep 300 : 11 29 secs (stopped)
+[5] sleep 20 : 14 1 secs (stopped)
+smash> sleep 20 : 14
+smash: got ctrl-Z
+smash: process 14 was stopped
+smash> sleep 20 : 14
+smash: got ctrl-C
+smash: process 14 was killed
+smash> sleep 200 : 10
+smash: got ctrl-Z
+smash: process 10 was stopped
+smash> [1] sleep 100& : 12 41 secs
+[2] sleep 200 : 10 1 secs (stopped)
+[3] sleep 300 : 11 36 secs (stopped)
+smash> bash: jobss: command not found
+smash> bash: fgg: command not found
+smash> bash: bgg: command not found
+smash> bash: killl: command not found
+smash> bash: cdcd: command not found
+smash> bash: quittt: command not found
+smash> bash: quitt: command not found
+smash> smash> smash> smash> smash> smash> smash> [1] sleep 100& : 12 55 secs
+[2] sleep 200 : 10 15 secs (stopped)
+[3] sleep 300 : 11 50 secs (stopped)
+[4] sleep 1000& : 15 4 secs
+[5] sleep 2000& : 16 3 secs
+[6] sleep 4000& : 17 2 secs
+[7] sleep 232               & : 18 1 secs
+smash> smash: sending SIGKILL signal to 7 jobs:
+12: sleep 100&
+10: sleep 200
+11: sleep 300
+15: sleep 1000&
+16: sleep 2000&
+17: sleep 4000&
+18: sleep 232               &

@@ -1,0 +1,162 @@
+smash> my_sleep
+random1.txt
+random2.txt
+sub1
+sub2
+sub3
+smash> smash> test_redirect
+smash> smash> again_redirect
+smash> smash> again_redirect
+test_redirect
+smash> smash> smash pid is 14560
+smash> smash> smash pid is 14560
+smash pid is 14560
+smash> smash> smash pid is 14560
+smash pid is 14560
+smash> mypid
+my_sleep
+new
+random1.txt
+random2.txt
+sub1
+sub2
+sub3
+smash> smash> smash> [1] sleep 100& : 14566 0 secs
+smash> smash error: kill: invalid arguments
+smash> smash> smash error: kill: invalid arguments
+smash> smash> k
+mypid
+my_sleep
+new
+random1.txt
+random2.txt
+s
+sub1
+sub2
+sub3
+t
+smash> smash> k
+mypid
+my_sleep
+new
+p
+random1.txt
+random2.txt
+s
+sub1
+sub2
+sub3
+t
+smash> k
+mypid
+my_sleep
+new
+p
+random1.txt
+random2.txt
+s
+sub1
+sub2
+sub3
+t
+smash> ls: write error: Bad file descriptor
+smash> ls: write error: Bad file descriptor
+smash> before
+smash> again_redirect
+test_redirect
+smash> smash> ls: write error: Bad file descriptor
+smash> smash> k
+mypid
+my_sleep
+p
+random1.txt
+random2.txt
+s
+sub1
+sub2
+sub3
+t
+smash> smash> k
+mypid
+my_sleep
+new
+p
+random1.txt
+random2.txt
+s
+sub1
+sub2
+sub3
+t
+smash> k
+mypid
+my_sleep
+new
+p
+random1.txt
+random2.txt
+s
+sub1
+sub2
+sub3
+t
+smash> smash> smash> k
+mypid
+my_sleep
+new
+p
+random1.txt
+random2.txt
+s
+sub1
+sub2
+sub3
+t
+smash> k
+mypid
+my_sleep
+new
+p
+random1.txt
+random2.txt
+s
+sub1
+sub2
+sub3
+t
+smash> smash> smash> k
+mypid
+my_sleep
+new
+p
+random1.txt
+random2.txt
+s
+sub1
+sub2
+sub3
+t
+smash> smash> smash> k
+mypid
+my_sleep
+new
+p
+random1.txt
+random2.txt
+s
+sub1
+sub2
+sub3
+t
+test
+smash> smash> 0
+2
+4
+Done: 6
+smash> smash> smash error: kill: job-id <job-id> does not exist
+smash> 0
+2
+4
+Done: 6
+smash> smash: sending SIGKILL signal to 1 jobs:
+14566: sleep 100&

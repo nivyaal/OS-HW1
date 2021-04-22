@@ -1,0 +1,14 @@
+smash> /home/student/smash
+smash> bash: pwdd: command not found
+smash> /home/student/smash
+smash> /home/student/smash
+smash> /home/student/smash
+smash> smash error: cd: OLDPWD not set
+smash> smash error: cd: OLDPWD not set
+smash> smash> /home/student
+smash> smash> /home/student/smash
+smash> smash> /home/student
+smash> smash error: chdir failed: No such file or directory
+smash> smash> smash> smash> smash error: cd: too many arguments
+smash> /home/student/smash
+smash> 

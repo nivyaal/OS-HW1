@@ -1,0 +1,10 @@
+smash error: open failed: No such file or directory
+smash> smash: Makefile was copied to wtf
+smash> smash> smash error: open failed: No such file or directory
+smash> smash: Makefile was copied to /home/student/hiush
+smash> smash> smash: hiush was copied to byeush
+smash> smash: hiush was copied to smash/hiiii
+smash> smash> smash: test2.in was copied to cptest1
+smash> smash: test4.in was copied to cptest2
+smash> smash: cptest1 was copied to cptest2
+smash> smash> smash> 

@@ -1,0 +1,18 @@
+sleep 500
+ctrlz
+kill -9 1
+bg
+      bg
+bg abc
+ bg -5
+bg 1 a
+bg 1
+sleep 100&
+bg 1
+sleep 200
+ctrlz
+sleep 300
+ctrlz
+bg 2
+jobs
+showpid
