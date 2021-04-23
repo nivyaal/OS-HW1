@@ -1,0 +1,22 @@
+cd - // exp error
+cd -& // exp error
+mkdir tmp1
+mkdir tmp1/tmp2
+cd tmp1 
+pwd
+cd tmp2
+pwd
+cd -
+pwd
+cd -
+pwd
+cd tmp1&
+pwd
+cd tmp2&
+pwd
+cd -&
+pwd
+cd -&
+pwd
+cd tmp1 tmp2 
+pwd

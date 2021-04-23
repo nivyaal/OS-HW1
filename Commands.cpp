@@ -214,11 +214,26 @@ void JobsList::JobEntry::stopJob()
   }
 }
 
+
+
 void JobsList::JobEntry::continueJob()
-{  this->is_stopped=0;
+{  
+  this->is_stopped=0;
   if (kill(job_pid,18) == -1)
   {
     perror("smash error: kill failed");
+  }
+}
+
+void JobsList::JobEntry::setStatus(int signal)
+{
+  if (signal == SIGSTOP)
+  {
+    this->is_stopped =1;
+  }
+  else if (signal == SIGCONT)
+  {
+    this -> is_stopped =0;
   }
 }
 
@@ -360,7 +375,6 @@ void AlarmList::setNewAlarm(const time_t future_time,const pid_t job_pid)
 
 void ChangePromptCommand::execute()
 {
-  std::cout << " im in " <<std::endl;
     SmallShell &smash = SmallShell::getInstance();
     char **args = new char *[COMMAND_MAX_ARGS];
   if (_parseCommandLine(cmd_line, args) == 1)
@@ -369,7 +383,6 @@ void ChangePromptCommand::execute()
   } 
   else
   {
-    std::cout << " new prompt is " + string(args[1]) << std::endl;
     smash.SetShellPrompt(string(args[1])+"> ");
   }
   delete[] args;
@@ -392,20 +405,19 @@ void KillCommand::execute()
   }
   std::string signal_str = string(args[1]);
   std::string job_id_str = string(args[2]);
+  delete[] args;
   int signal = stoi(signal_str);
   int job_id = stoi(job_id_str);
   signal=-signal;
   if (signal > 64 || signal <1)
   {
     cerr << "smash error: kill: invalid arguments" << endl;
-    delete[] args;
     return;
   }
   JobsList::JobEntry* job = this->jobs_list->getJobById(job_id);
   if (job == nullptr)
   {
     cerr << "smash error: kill: job-id <job-id> does not exist" << endl;
-    delete[] args;
     return;
   }
   if (kill(job->getJobPid(),signal) == -1)
@@ -414,9 +426,12 @@ void KillCommand::execute()
   }
   else
   {
+    if (signal == SIGCONT || signal == SIGSTOP)
+    {
+      job->setStatus(signal);
+    }
     std::cout<< "signal number " + std::to_string(signal) + " was sent to pid " + std::to_string(job->getJobPid())<<std::endl;
   }
-  delete[] args;
   return;
 }
 
@@ -556,7 +571,8 @@ void ForegroundCommand::execute()
     job->continueJob();
   }
   smash.setCurrFgPid(job->getJobPid());
-  smash.setCurrFgLine((job->getJobCommand()).c_str());
+  smash.setCurrFgCommand(smash.CreateCommand(job->getJobCommand().c_str()));
+  smash.getJobsList()->removeJobByPid(job->getJobPid());
   cout <<job->getJobCommand() +" : " + to_string(job->getJobPid())<< std::endl; 
   waitpid(job->getJobPid(), &status, WUNTRACED);
   if (WIFEXITED(status) || WIFSIGNALED(status))
@@ -612,15 +628,17 @@ void BackgroundCommand::execute()
 void ExternalCommand::execute()
 {
   SmallShell &smash = SmallShell::getInstance();
-  
   pid_t pid = fork();
   if (pid >0 ) //father
   {
-    smash.getJobsList()->addJob(this,pid);
-    if (!_isBackgroundComamnd(this->cmd_line))
+    if (_isBackgroundComamnd(this->getCmdLine().c_str()))
+    {
+      smash.getJobsList()->addJob(this,pid);
+    }
+    else
     {
       smash.setCurrFgPid(pid);
-      smash.setCurrFgLine((this->getCmdLine()).c_str());
+      smash.setCurrFgCommand(this);
       int status;
       waitpid(pid, &status, WUNTRACED);
       if (WIFEXITED(status) || WIFSIGNALED(status))
@@ -739,7 +757,7 @@ void TimeOutCommand::execute()
     if (!_isBackgroundComamnd(this->cmd_line))
     {
       smash.setCurrFgPid(pid);
-      smash.setCurrFgLine(this->getCmdLine().c_str());
+      smash.setCurrFgCommand(this);
       int status;
       waitpid(pid, &status, WUNTRACED);
       if (WIFEXITED(status) || WIFSIGNALED(status))

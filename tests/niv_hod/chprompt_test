@@ -1,0 +1,9 @@
+chprompt regular_prompt_change // exp : "regular_prompt_change>"
+chprompt  // exp: "smash> :"
+chprompt prompt_with_unprecent& // ex : "prompt_with_unprecent>"
+chprompt prompt_with_unprecent     & // ex : "prompt_with_unprecent>"
+chprompt regular prompt change // ex : "regular>"
+chprompt bash // exp : "bash>"
+chprompt& // exp : "smash>"
+chprompt      & // exp : "smash>"
+quit 

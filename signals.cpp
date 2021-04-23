@@ -16,9 +16,13 @@ void ctrlZHandler(int sig_num) {
     }
     else
     {
-
-  std::cout << "smash: process " << to_string(procc_pid) << " was stopped"<< endl; 
-  smash.getJobsList()->getJobByPid(procc_pid)->stopJob();
+    if (kill(procc_pid,SIGSTOP) == -1 )
+    {
+      perror("smash error: kill failed");
+    }
+    std::cout << "smash: process " << to_string(procc_pid) << " was stopped"<< endl; 
+    smash.getJobsList()->addJob(smash.getCurrFgCommand(), procc_pid);
+    smash.getJobsList()->getJobByPid(procc_pid)->setStatus(SIGSTOP);
   }
 }
 
@@ -50,7 +54,7 @@ void alarmHandler(int sig_num) {
     perror("smash error: kill failed");
   }
   int res =waitpid(procc_pid,nullptr,WNOHANG); // kill Zombie;
-  std::string cmd_line=smash.getCurrFgLine();
+  std::string cmd_line=smash.getCurrFgCommand()->getCmdLine();
   if ( smash.getCurrFgPid() == -1) // external command
   {
      cmd_line = smash.getJobsList()->getJobByPid(procc_pid)->getJobCommand();

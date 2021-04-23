@@ -220,19 +220,20 @@ class JobsList {
    bool is_done;
    bool is_stopped;
    int job_id;
-   time_t init_time;
-   int job_pid;
+   time_t insertion_time;
+   pid_t job_pid;
    std::string job_command;
    public:
    JobEntry(bool done_status,bool stopped_status,int id,time_t time,pid_t pid,std::string command):
-   is_done(done_status),is_stopped(stopped_status),job_id(id),init_time(time),job_pid(pid),job_command(command){};
+   is_done(done_status),is_stopped(stopped_status),job_id(id),insertion_time(time),job_pid(pid),job_command(command){};
    bool isJobDone(){  return this->is_done;};
    bool isJobStopped(){ return this->is_stopped;};
    int getJobId(){  return this->job_id;};
    pid_t getJobPid(){ return this->job_pid;};
-   int getJobTime(){  return this->init_time;}
+   int getJobTime(){  return this->insertion_time;}
    void stopJob();
    void continueJob();
+   void setStatus(int signal);
    std::string getJobCommand(){ return this->job_command;}
   };
  // TODO: Add your data members
@@ -263,12 +264,14 @@ class SmallShell {
   // TODO: Add your data members
   std::string prompt_name;
   std::string previous_path;
-  std::string curr_fg_cmd_line;
+  Command* curr_fg_command;
   pid_t smash_pid;
   pid_t curr_fg_pid;
   int max_job_id;
   JobsList job_list;
   AlarmList alarm_list;
+
+
   SmallShell();
  public:
   Command *CreateCommand(const char* cmd_line);
@@ -285,46 +288,14 @@ class SmallShell {
   // TODO: add extra methods as needed
   void SetShellPrompt(std::string new_header)
   {this->prompt_name=new_header;};
-  std::string getShellPrompt()
-  {
-    return this->prompt_name;
-  }
-  void setCurrFgLine(const char* cmd_line)
-  {
-    curr_fg_cmd_line=std::string(cmd_line);
-  }
-  std::string getCurrFgLine()
-  {
-    return this->curr_fg_cmd_line;
-  }
-
-  std::string& getPrePath()
-  {
-    return this->previous_path;
-  }
-
-  void setCurrFgPid(pid_t fg_num)
-  {
-    this->curr_fg_pid=fg_num;
-  }
-
-  pid_t getCurrFgPid()
-  {
-    return this->curr_fg_pid;
-  }
-
-  JobsList* getJobsList()
-  {
-    return &this->job_list;
-  }
-  AlarmList* getAlarmsList()
-  {
-    return &this->alarm_list;
-  }
-  pid_t getSmashPid()
-  {
-    return smash_pid;
-  }
+  std::string getShellPrompt(){ return this->prompt_name;}
+  std::string& getPrePath(){  return this->previous_path;}
+  void setCurrFgPid(pid_t fg_num){  this->curr_fg_pid=fg_num;}
+  pid_t getCurrFgPid(){ return this->curr_fg_pid;}JobsList* getJobsList(){  return &this->job_list;}
+  AlarmList* getAlarmsList(){  return &this->alarm_list;}
+  pid_t getSmashPid(){  return smash_pid;}
+  void setCurrFgCommand(Command* curr_fg) {curr_fg_command = curr_fg;}
+  Command* getCurrFgCommand() { return this-> curr_fg_command;}
 };
 
 #endif //SMASH_COMMAND_H_

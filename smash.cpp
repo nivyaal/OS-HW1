@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) {
         std::getline(std::cin, cmd_line);
         smash.executeCommand(cmd_line.c_str());
         smash.setCurrFgPid(-1);
-        smash.setCurrFgLine("");
+        smash.setCurrFgCommand(nullptr);
     }
     return 0;
 

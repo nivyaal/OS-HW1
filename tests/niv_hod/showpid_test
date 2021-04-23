@@ -1,0 +1,8 @@
+showpid
+showpid& // should be the same as #1
+showpid     & // should be the same as #1
+showpid   123 // should be the same as #1
+showpid 1234  abcd// should be the same as #1
+showpid123 // should throw an error
+&showpid // should throw an error
+quit
