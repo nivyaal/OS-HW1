@@ -487,7 +487,7 @@ void CatCommand::execute()
     delete[] args;
   }
   int fd;
-  char* buf[5];
+  char* buf[1024];
   for (int i=0;i<num_of_files;i++)
   {
     fd = open(args[i+1],O_RDWR);
@@ -497,26 +497,24 @@ void CatCommand::execute()
       perror("smash: open failed");
       return;
     }
+    delete[] args;
     int read_data;
     while(read_data = read(fd,buf,1) )
     {
       if (read_data == -1)
       {
-        delete[] args;
         perror("smash: read failed");
         return;
       }
       int write_data = write(STDOUT_FILENO,buf,1);
-      if (write_data != read_data || write_data == -1) 
+      if ( write_data == -1) 
       {
-        delete[] args;
         perror("smash: write failed");
         return;
       }
     }
     close(fd);
-  }
-  
+  } 
 }
 
 void ShowPidCommand::execute()
