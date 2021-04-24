@@ -1,0 +1,4 @@
+does kill should support macro
+job numbers tamir question
+timeout with pipe
+where does a process that comes back with SIGCONT comes back fg/bg
