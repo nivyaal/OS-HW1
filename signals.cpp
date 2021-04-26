@@ -57,7 +57,7 @@ void alarmHandler(int sig_num) {
   }
   int res =waitpid(procc_pid,nullptr,WNOHANG); // kill Zombie;
   std::string cmd_line=smash.getCurrFgCommand()->getCmdLine();
-  if ( smash.getCurrFgPid() == -1) // external command
+  if ( smash.getCurrFgPid() == -1 || smash.getCurrFgPid() != procc_pid) // external command
   {
      cmd_line = smash.getJobsList()->getJobByPid(procc_pid)->getJobCommand();
   }

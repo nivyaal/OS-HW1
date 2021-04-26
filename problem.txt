@@ -3,3 +3,6 @@ job numbers tamir question
 timeout with pipe
 where does a process that comes back with SIGCONT comes back fg/bg 
 removing a command from command list after fg command
+making macro syscall?
+check that every syscall have perror if failed
+adjusting kill command to signals macro for tests

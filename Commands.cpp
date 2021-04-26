@@ -480,11 +480,11 @@ void CatCommand::execute()
   SmallShell &smash = SmallShell::getInstance();
   char **args = new char *[COMMAND_MAX_ARGS];
   int num_of_files =   _parseCommandLine(cmd_line, args);
+  delete[] args;
   num_of_files--;
   if (num_of_files == 0)
   {
     cerr<<"smash error: cat: not enough arguments"<<std::endl;
-    delete[] args;
   }
   int fd;
   char* buf[1024];
@@ -493,11 +493,9 @@ void CatCommand::execute()
     fd = open(args[i+1],O_RDWR);
     if (fd <0)
     {
-      delete[] args;
       perror("smash: open failed");
       return;
     }
-    delete[] args;
     int read_data;
     while(read_data = read(fd,buf,1) )
     {
@@ -573,10 +571,10 @@ void ForegroundCommand::execute()
   smash.getJobsList()->removeJobByPid(job->getJobPid());
   cout <<job->getJobCommand() +" : " + to_string(job->getJobPid())<< std::endl; 
   waitpid(job->getJobPid(), &status, WUNTRACED);
-  if (WIFEXITED(status) || WIFSIGNALED(status))
+  /*if (WIFEXITED(status) || WIFSIGNALED(status))
   {
     smash.getJobsList()->removeJobByPid(job->getJobPid());
-  }
+  }*/
   delete[] args;
 }
 
