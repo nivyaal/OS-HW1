@@ -163,6 +163,7 @@ class KillCommand : public BuiltInCommand {
   KillCommand(const char* cmd_line, JobsList* jobs):BuiltInCommand(cmd_line),jobs_list(jobs){};
   virtual ~KillCommand() {}
   void execute() override;
+  int signalStringToInt(std::string signal);
 };
 
 class ForegroundCommand : public BuiltInCommand {
@@ -231,6 +232,7 @@ class JobsList {
    int getJobId(){  return this->job_id;};
    pid_t getJobPid(){ return this->job_pid;};
    int getJobTime(){  return this->insertion_time;}
+   void restartInsertionTime(){ this-> insertion_time = time(nullptr);}
    void stopJob();
    void continueJob();
    void setStatus(int signal);
@@ -251,7 +253,7 @@ class JobsList {
   void removeFinishedJobs();
   void removeJobByPid(int jobPid);
   JobEntry * getLastJob(int* lastJobId);
-  JobEntry *getLastStoppedJob(int *jobId);
+  void getLastStoppedJob(JobEntry** job);
   bool isEmpty(){return size == 0;};
   // TODO: Add extra methods or modify exisitng ones as needed
 };

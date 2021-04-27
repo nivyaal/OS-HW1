@@ -33,7 +33,7 @@ This is done in order to help us from solving bugs for everyone, so
 ="smash" -test="unit/jobs"`
 * In order to generate tests of your own, create a test.in and test.exp
  files, where the test.exp file matches by regex the expected output
-  line by line.
+    line by line.
 * Additionaly, you may specify a (flat) directory of your choice containing `.in` and `.exp` files in the with the command `./test.py -smash="<your_smash>" -test="<directory_path>"`
 
 

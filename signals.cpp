@@ -21,7 +21,15 @@ void ctrlZHandler(int sig_num) {
       perror("smash error: kill failed");
     }
     std::cout << "smash: process " << to_string(procc_pid) << " was stopped"<< endl; 
-    smash.getJobsList()->addJob(smash.getCurrFgCommand(), procc_pid);
+    JobsList::JobEntry* job = smash.getJobsList()->getJobByPid(procc_pid);
+    if (job == nullptr)
+    {
+      smash.getJobsList()->addJob(smash.getCurrFgCommand(), procc_pid);
+    }
+    else
+    {
+      job->restartInsertionTime();
+    }
     smash.getJobsList()->getJobByPid(procc_pid)->setStatus(SIGSTOP);
     smash.setCurrFgPid(-1);
     smash.setCurrFgCommand(nullptr);

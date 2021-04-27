@@ -141,6 +141,7 @@ Command * SmallShell::CreateCommand(const char* cmd_line) {
   }  
 }
 
+
 void SmallShell::executeCommand(const char *cmd_line) {
   // TODO: Add your implementation here
   // for example:
@@ -330,18 +331,16 @@ JobsList::JobEntry* JobsList::getJobByPid(int jobPid)
     return &jobs_vector.back();
   }
 
-  JobsList::JobEntry* JobsList::getLastStoppedJob(int *jobId)
+   JobsList::JobEntry* JobsList::getLastStoppedJob()
     {
-      *jobId=0;
-      for ( auto it = jobs_vector.rbegin(); it!=jobs_vector.rend();it++ )
+      for ( vector<JobsList::JobEntry>::iterator it = jobs_vector.begin(); it!=jobs_vector.end();it++ )
       {
         if (it->isJobStopped())
         {
-          *jobId = it->getJobId();
-           break;
+          return it;
         }
       }
-      return getJobById(*jobId);
+      return nullptr;
     }
 
 //************************************************************************** ALARM LIST ***************************************************************
@@ -406,9 +405,8 @@ void KillCommand::execute()
   std::string signal_str = string(args[1]);
   std::string job_id_str = string(args[2]);
   delete[] args;
-  int signal = stoi(signal_str);
+  int signal = signalStringToInt(signal_str);
   int job_id = stoi(job_id_str);
-  signal=-signal;
   if (signal > 64 || signal <1)
   {
     cerr << "smash error: kill: invalid arguments" << endl;
@@ -534,7 +532,7 @@ void ForegroundCommand::execute()
   char **args = new char *[COMMAND_MAX_ARGS];
   int num_of_args =   _parseCommandLine(cmd_line, args);
   int status;
-  JobsList::JobEntry * job;
+  JobsList::JobEntry* job;
   if (num_of_args > 2)
   {
     std::cerr<<("smash error: fg: invalid arguments")<<std::endl;
@@ -568,13 +566,12 @@ void ForegroundCommand::execute()
   }
   smash.setCurrFgPid(job->getJobPid());
   smash.setCurrFgCommand(smash.CreateCommand(job->getJobCommand().c_str()));
-  smash.getJobsList()->removeJobByPid(job->getJobPid());
   cout <<job->getJobCommand() +" : " + to_string(job->getJobPid())<< std::endl; 
   waitpid(job->getJobPid(), &status, WUNTRACED);
-  /*if (WIFEXITED(status) || WIFSIGNALED(status))
+  if (WIFEXITED(status) || WIFSIGNALED(status))
   {
     smash.getJobsList()->removeJobByPid(job->getJobPid());
-  }*/
+  }
   delete[] args;
 }
 
@@ -593,7 +590,7 @@ void BackgroundCommand::execute()
   }
   else if (num_of_args == 1)
   {
-    job = smash.getJobsList()->getLastStoppedJob(nullptr);
+    job = smash.getJobsList()->getLastStoppedJob();
     if (job == nullptr)
     {
         std::cerr<<("smash error: bg: there is no stopped jobs to resume")<<std::endl;
@@ -920,4 +917,13 @@ void RedirectionCommand::redirectTwoArrows(const char* cmd_line)
   int fd =open(file_name.c_str(),O_CREAT|O_APPEND|O_RDWR, 0666);
   close(STDOUT_FILENO);
   dup2(fd,STDOUT_FILENO);
+}
+
+int KillCommand::signalStringToInt(std::string signal)
+{
+  if (signal.find_first_not_of("-0123456789") != -1 || signal.length()<2)
+  {
+    return 0;
+  }
+  return -stoi(signal);
 }
