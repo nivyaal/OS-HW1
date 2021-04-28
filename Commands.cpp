@@ -177,9 +177,8 @@ void SmallShell::executeCommand(const char *cmd_line) {
   // cmd->execute();
   // Please note that you must fork smash process for some commands (e.g., external commands....)
   this->getJobsList()->removeFinishedJobs();
+
   Command* cmd = CreateCommand(cmd_line);
-  std::string cmd_s = _trim(string(cmd_line));
-  std::string firstWord = cmd_s.substr(0, cmd_s.find_first_of(" \n"));
   cmd->execute();
   delete cmd;
 }
@@ -374,7 +373,6 @@ void AlarmList::setNewAlarm(const time_t future_time,const pid_t job_pid)
   alarm_list.insert({future_time,job_pid});
   if (alarm_list.begin()->second == job_pid)
   {
-    int temp = future_time-time(nullptr);
      alarm(future_time-time(nullptr));
   }
   return;
@@ -509,39 +507,37 @@ void CatCommand::execute()
   SmallShell &smash = SmallShell::getInstance();
   char **args = new char *[COMMAND_MAX_ARGS];
   int num_of_files =   _parseCommandLine(cmd_line, args);
-  delete[] args;
   num_of_files--;
   if (num_of_files == 0)
   {
     cerr<<"smash error: cat: not enough arguments"<<std::endl;
   }
   int fd;
-  char* buf;
+  char buf;
   for (int i=0;i<num_of_files;i++)
   {
     fd = open(args[i+1],O_RDWR);
     if (fd <0)
     {
-      perror("smash: open failed");
+      perror("smash error: open failed");
+      delete[] args;
       return;
     }
     int read_data;
-    while(read_data = read(fd,buf,1) )
+    while(read_data = read(fd,&buf,sizeof(buf)) )
     {
       if (read_data == -1)
       {
-        perror("smash: read failed");
+        perror("smash error: read failed");
+        delete[] args;
         return;
       }
-      int write_data = write(STDOUT_FILENO,buf,1);
-      if ( write_data == -1) 
-      {
-        perror("smash: write failed");
-        return;
-      }
+      CALL_SYS(write(STDOUT_FILENO,&buf,1),"write");
     }
     CALL_SYS(close(fd),"close");
   } 
+  delete[] args;
+  return;
 }
 
 void ShowPidCommand::execute()
@@ -614,7 +610,7 @@ void BackgroundCommand::execute()
 {
   SmallShell &smash = SmallShell::getInstance();
   char **args = new char *[COMMAND_MAX_ARGS];
-  int num_of_args =   _parseCommandLine(cmd_line, args);
+  int num_of_args = _parseCommandLine(cmd_line, args);
   int status;
   JobsList::JobEntry * job;
   if (num_of_args > 2)
@@ -645,13 +641,13 @@ void BackgroundCommand::execute()
     job = smash.getJobsList()->getJobById(job_id);
     if (job == nullptr)
     {
-      cerr << "smash error: bg: job-id "+string(args[1]) +"does not exist"<<std::endl;
+      cerr << "smash error: bg: job-id "+string(args[1]) +" does not exist"<<std::endl;
       delete[] args;
       return;
     }
-    if (job->isJobStopped())
+    if (!job->isJobStopped())
     {
-      cerr << "smash error: bg: job-id "+string(args[1]) +"is already running in the background"<<std::endl;
+      cerr << "smash error: bg: job-id "+string(args[1]) +" is already running in the background"<<std::endl;
       delete[] args;
       return;
     }
@@ -722,6 +718,7 @@ void QuitCommand::execute()
 
 void RedirectionCommand::execute()
 {
+  int *fail_flag = 0;
   SmallShell &smash = SmallShell::getInstance();
   int saved_stdout = dup(STDOUT_FILENO);
   if (saved_stdout == -1 )
@@ -731,11 +728,17 @@ void RedirectionCommand::execute()
   }
  if (isOneArrow(cmd_line))
  { 
-   redirectOneArrow(this->getCmdLine().c_str());
+   if (redirectOneArrow(this->getCmdLine().c_str()) == false) //  in case redirection failed of any reason
+   {
+     return;
+   }
  }
  else if (isTwoArrows(cmd_line))
  {
-   redirectTwoArrows((this->getCmdLine()).c_str());
+   if (redirectTwoArrows((this->getCmdLine()).c_str()) == false ) // in case redireciton failed of any reason
+   {
+     return;
+   }
  }  //parse command
   std::string cmd_str = string(cmd_line);
   cmd_str = _trim(cmd_str.erase(cmd_str.find_first_of(">"),cmd_str.size()));
@@ -958,7 +961,7 @@ bool RedirectionCommand::isTwoArrows(const char* cmd_line)
   } 
 }
 
-void RedirectionCommand::redirectOneArrow(const char* cmd_line)
+bool RedirectionCommand::redirectOneArrow(const char* cmd_line)
 {
   std::string cmd_string = string(cmd_line);
   std::string file_name = _trim(cmd_string.erase(0,cmd_string.find_last_of(">")+1));
@@ -966,13 +969,22 @@ void RedirectionCommand::redirectOneArrow(const char* cmd_line)
   if (fd == -1)
   {
     perror("smash error: open failed");
+    return false;
   }
-  CALL_SYS(close(STDOUT_FILENO),"close");
-  CALL_SYS(dup2(fd,STDOUT_FILENO),"dup2");
-
+   if (close(STDOUT_FILENO) == -1 )
+   {
+     perror("smash error: close failed");
+     return false;
+   }
+  if (dup2(fd,STDOUT_FILENO) == -1 )
+  {
+    perror("smash error: dup2 failed");
+    return false;
+  }
+  return true;
 }
 
-void RedirectionCommand::redirectTwoArrows(const char* cmd_line)
+bool RedirectionCommand::redirectTwoArrows(const char* cmd_line)
 {
   std::string cmd_string = string(cmd_line);
   std::string file_name = _trim(cmd_string.erase(0,cmd_string.find_last_of(">")+1));
@@ -980,9 +992,19 @@ void RedirectionCommand::redirectTwoArrows(const char* cmd_line)
   if (fd == -1)
   {
     perror("smash error: open failed");
+    return false;
   }
-  CALL_SYS(close(STDOUT_FILENO),"close");
-  CALL_SYS(dup2(fd,STDOUT_FILENO),"dup2");
+   if (close(STDOUT_FILENO) == -1 )
+   {
+     perror("smash error: close failed");
+     return false;
+   }
+  if (dup2(fd,STDOUT_FILENO) == -1 )
+  {
+    perror("smash error: dup2 failed");
+    return false;
+  }
+  return true;
 }
 
 

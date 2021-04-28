@@ -8,11 +8,11 @@ smash> smash> test_redirect
 smash> smash> again_redirect
 smash> smash> again_redirect
 test_redirect
-smash> smash> smash pid is 14560
-smash> smash> smash pid is 14560
-smash pid is 14560
-smash> smash> smash pid is 14560
-smash pid is 14560
+smash> smash> smash pid is 28835
+smash> smash> smash pid is 28835
+smash pid is 28835
+smash> smash> smash pid is 28835
+smash pid is 28835
 smash> mypid
 my_sleep
 new
@@ -21,7 +21,7 @@ random2.txt
 sub1
 sub2
 sub3
-smash> smash> smash> [1] sleep 100& : 14566 0 secs
+smash> smash> smash> [1] sleep 100& : 28842 0 secs
 smash> smash error: kill: invalid arguments
 smash> smash> smash error: kill: invalid arguments
 smash> smash> k
@@ -59,12 +59,12 @@ sub1
 sub2
 sub3
 t
-smash> ls: write error: Bad file descriptor
-smash> ls: write error: Bad file descriptor
+smash> smash error: open failed: No such file or directory
+smash> smash error: open failed: No such file or directory
 smash> before
 smash> again_redirect
 test_redirect
-smash> smash> ls: write error: Bad file descriptor
+smash> smash> smash error: open failed: Permission denied
 smash> smash> k
 mypid
 my_sleep
@@ -153,10 +153,10 @@ smash> smash> 0
 2
 4
 Done: 6
-smash> smash> smash error: kill: job-id <job-id> does not exist
+smash> smash> smash error: kill: job-id 2 does not exist
 smash> 0
 2
 4
 Done: 6
 smash> smash: sending SIGKILL signal to 1 jobs:
-14566: sleep 100&
+28842: sleep 100&

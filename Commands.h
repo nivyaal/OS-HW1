@@ -48,8 +48,8 @@ std::string _trim(const std::string& s);
 int _parseCommandLine(const char* cmd_line, char** args);
 bool _isBackgroundComamnd(const char* cmd_line);
 std::string _removeBackgroundSign(std::string str);
-void redirectOneArrow(const char* cmd_line);
-void redirectTwoArrows(const char* cmd_line);
+bool redirectOneArrow(const char* cmd_line);
+bool redirectTwoArrows(const char* cmd_line);
 class BuiltInCommand : public Command {
  public:
   BuiltInCommand(const char* cmd_line):Command(cmd_line){};
@@ -89,8 +89,8 @@ class RedirectionCommand : public Command {
   void execute() override;
   static bool isOneArrow(const char* cmd_line);
   static bool isTwoArrows(const char* cmd_line);
-  void redirectOneArrow(const char* cmd_line);
-   void redirectTwoArrows (const char* cmd_line);
+  bool redirectOneArrow(const char* cmd_line);
+  bool redirectTwoArrows (const char* cmd_line);
   //void prepare() override;
   //void cleanup() override;
 };

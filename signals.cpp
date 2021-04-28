@@ -65,16 +65,25 @@ void ctrlCHandler(int sig_num) {
 }
 
 void alarmHandler(int sig_num) {
-  
+  std::cout<<"im in "<<std::endl;
   // TODO: Add your implementation
  SmallShell &smash = SmallShell::getInstance();
   pid_t procc_pid = smash.getAlarmsList()->getLastAlarmPid();
-  CALL_SYS(kill(procc_pid,SIGKILL),"kill");
-  int res =waitpid(procc_pid,nullptr,WNOHANG); // kill Zombie;
-  std::string cmd_line=smash.getCurrFgCommand()->getCmdLine();
-  if ( smash.getCurrFgPid() == -1 || smash.getCurrFgPid() != procc_pid) // external command
+  if (kill(procc_pid,0) == -1 ) // in case the process has already ended
   {
-     cmd_line = smash.getJobsList()->getJobByPid(procc_pid)->getJobCommand();
+    int res =waitpid(procc_pid,nullptr,WNOHANG); // kill Zombie;
+    std::cout << "smash: got an alarm"<<std::endl;
+    return;
   }
-  std::cout << "smash: got an alarm\nsmash: " + cmd_line+ " timed out!" << std::endl;
+  else
+  {
+    CALL_SYS(kill(procc_pid,SIGKILL),"kill");
+    int res =waitpid(procc_pid,nullptr,WNOHANG); // kill Zombie;
+    std::string cmd_line=smash.getCurrFgCommand()->getCmdLine();
+    if ( smash.getCurrFgPid() == -1 || smash.getCurrFgPid() != procc_pid) // external command
+    {
+       cmd_line = smash.getJobsList()->getJobByPid(procc_pid)->getJobCommand();
+    }
+    std::cout << "smash: got an alarm\nsmash" + cmd_line+ " timed out!" << std::endl;
+  }
 }
