@@ -1,3 +1,9 @@
+
+
+/* TO DO:
+  -error return order check
+  -syntax check
+  */
 #include "Commands.h"
 
 #define WHITESPACE " "
@@ -29,6 +35,15 @@ using namespace std;
   } while (0)
 
 //                                                      STRING PARSING FUNCTIONS
+bool isNumber(std::string string)
+{
+  if ((string.find_first_not_of("-0123456789") != -1) || (string == "-"))
+  {
+    return false;
+  }
+  return true;
+}
+
 string _ltrim(const std::string& s)
 {
   size_t start = s.find_first_not_of(WHITESPACE);
@@ -342,7 +357,7 @@ JobsList::JobEntry* JobsList::getJobByPid(int jobPid)
 
    JobsList::JobEntry* JobsList::getLastStoppedJob()
     {
-      for ( vector<JobsList::JobEntry>::iterator it = jobs_vector.begin(); it!=jobs_vector.end();it++ )
+      for ( vector<JobsList::JobEntry>::reverse_iterator it = jobs_vector.rbegin(); it!=jobs_vector.rend();it++ )
       {
         if (it->isJobStopped())
         {
@@ -414,19 +429,26 @@ void KillCommand::execute()
   std::string signal_str = string(args[1]);
   std::string job_id_str = string(args[2]);
   delete[] args;
-  int signal = signalStringToInt(signal_str);
-  int job_id = stoi(job_id_str);
-  if (signal > 64 || signal <1)
+  if (!isNumber(signal_str) || !isNumber(job_id_str))
   {
     cerr << "smash error: kill: invalid arguments" << endl;
     return;
   }
+  int signal = -stoi(signal_str);
+  int job_id = stoi(job_id_str);
   JobsList::JobEntry* job = this->jobs_list->getJobById(job_id);
   if (job == nullptr)
   {
-    cerr << "smash error: kill: job-id <job-id> does not exist" << endl;
+    cerr << "smash error: kill: job-id " + to_string(job_id) + " does not exist" << endl;
     return;
   }
+
+  if ((signal > 64 || signal <1))
+  {
+    cerr << "smash error: kill: invalid arguments" << endl;
+    return;
+  }
+
 if (kill(job->getJobPid(),signal)  == -1 )
 {
   perror("smash error: kill failed");  
@@ -560,12 +582,18 @@ void ForegroundCommand::execute()
   }
   else
   {
+    if (!isNumber(string(args[1])))
+    {
+      cerr<< "smash error: fg: invalid arguments" << std::endl;
+      delete[] args;
+      return;
+    }
     int job_id = stoi(string(args[1]));
+    delete[] args;
     job = smash.getJobsList()->getJobById(job_id);
     if (job == nullptr)
     {
-      cerr << "smash error: fg: job-id "+string(args[1]) +"does not exist"<<std::endl;
-      delete[] args;
+      cerr << "smash error: fg: job-id "+to_string(job_id) +" does not exist"<<std::endl;
       return;
     }
   }
@@ -580,9 +608,7 @@ void ForegroundCommand::execute()
   if (WIFEXITED(status) || WIFSIGNALED(status))
   {
     smash.getJobsList()->removeJobByPid(job->getJobPid());
-  }
-  delete[] args;
-}
+  }}
 
 void BackgroundCommand::execute()
 {
@@ -609,6 +635,12 @@ void BackgroundCommand::execute()
   }
   else
   {
+    if (!isNumber(string(args[1])))
+    {
+      std::cerr<<("smash error: fg: invalid arguments")<<std::endl;
+      delete[] args;
+      return;
+    }
     int job_id = stoi(string(args[1]));
     job = smash.getJobsList()->getJobById(job_id);
     if (job == nullptr)
@@ -625,8 +657,11 @@ void BackgroundCommand::execute()
     }
   }
   job->continueJob();
+  cout << job->getJobCommand() << " : " << to_string(job->getJobPid()) <<endl;
   return;
 }
+
+
 void ExternalCommand::execute()
 {
   SmallShell &smash = SmallShell::getInstance();
@@ -801,6 +836,10 @@ time_t TimeOutCommand::getAlarmTime(const char* cmd_line)
 {
   char **args = new char *[COMMAND_MAX_ARGS];
   int num_of_args =   _parseCommandLine(cmd_line, args);
+  if (!isNumber(string(args[1])))
+  {
+    std::cerr<<("smash error: timeout: invalid arguments")<<std::endl;
+  }
   int alarm = stoi(std::string(args[1]));
   time_t curr_time= time(nullptr);
   return alarm + curr_time;
@@ -946,11 +985,4 @@ void RedirectionCommand::redirectTwoArrows(const char* cmd_line)
   CALL_SYS(dup2(fd,STDOUT_FILENO),"dup2");
 }
 
-int KillCommand::signalStringToInt(std::string signal)
-{
-  if (signal.find_first_not_of("-0123456789") != -1 || signal.length()<2)
-  {
-    return 0;
-  }
-  return -stoi(signal);
-}
+
