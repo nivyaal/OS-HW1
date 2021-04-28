@@ -253,7 +253,7 @@ class JobsList {
   void removeFinishedJobs();
   void removeJobByPid(int jobPid);
   JobEntry * getLastJob(int* lastJobId);
-  void getLastStoppedJob(JobEntry** job);
+  JobEntry* getLastStoppedJob();
   bool isEmpty(){return size == 0;};
   // TODO: Add extra methods or modify exisitng ones as needed
 };

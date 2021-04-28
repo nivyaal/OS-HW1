@@ -4,7 +4,23 @@
 #include "Commands.h"
 #define SIGSTP 19
 
+#define CALL_SYS(syscall, syscall_name)                \
+  do                                                   \
+  {                                                    \
+    if ((syscall) == -1)                               \
+    {                                                  \
+      string str_for_perror = string("smash error: "); \
+      str_for_perror += syscall_name;                  \
+      str_for_perror += " failed";                     \
+      perror((char *)str_for_perror.c_str());          \
+      return;                                          \
+    }                                                  \
+  } while (0)
+
+
 using namespace std;
+
+
 
 void ctrlZHandler(int sig_num) {
     SmallShell &smash = SmallShell::getInstance();
@@ -16,10 +32,7 @@ void ctrlZHandler(int sig_num) {
     }
     else
     {
-    if (kill(procc_pid,SIGSTOP) == -1 )
-    {
-      perror("smash error: kill failed");
-    }
+    CALL_SYS(kill(procc_pid,SIGSTOP),"kill");
     std::cout << "smash: process " << to_string(procc_pid) << " was stopped"<< endl; 
     JobsList::JobEntry* job = smash.getJobsList()->getJobByPid(procc_pid);
     if (job == nullptr)
@@ -46,10 +59,7 @@ void ctrlCHandler(int sig_num) {
     }
     else
     {
-      if (kill(procc_pid,SIGKILL) == -1 )
-      {
-        perror("smash error: kill failed");
-      }
+      CALL_SYS(kill(procc_pid,SIGKILL),"kill" );
     }
     std::cout << "smash: process " << to_string(procc_pid) << " was killed"<< endl; 
 }
@@ -59,10 +69,7 @@ void alarmHandler(int sig_num) {
   // TODO: Add your implementation
  SmallShell &smash = SmallShell::getInstance();
   pid_t procc_pid = smash.getAlarmsList()->getLastAlarmPid();
-  if (kill(procc_pid,SIGKILL) == -1 )
-  {
-    perror("smash error: kill failed");
-  }
+  CALL_SYS(kill(procc_pid,SIGKILL),"kill");
   int res =waitpid(procc_pid,nullptr,WNOHANG); // kill Zombie;
   std::string cmd_line=smash.getCurrFgCommand()->getCmdLine();
   if ( smash.getCurrFgPid() == -1 || smash.getCurrFgPid() != procc_pid) // external command
@@ -71,6 +78,3 @@ void alarmHandler(int sig_num) {
   }
   std::cout << "smash: got an alarm\nsmash: " + cmd_line+ " timed out!" << std::endl;
 }
-
-
-
