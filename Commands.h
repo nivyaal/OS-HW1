@@ -204,7 +204,15 @@ class AlarmList {
   void setNewAlarm(const time_t time,const pid_t job_pid);
   pid_t removeLastAlarm();
   pid_t getLastAlarmPid()
-  {return alarm_list.begin()->second;
+  {
+    if (alarm_list.begin()==alarm_list.end())
+    {
+      return -1;
+    }
+    else
+    {
+      return alarm_list.begin()->second;
+    }
   };
 
 
