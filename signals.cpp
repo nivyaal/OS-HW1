@@ -82,13 +82,15 @@ void alarmHandler(int sig_num) {
   {
     CALL_SYS(kill(procc_pid,SIGKILL),"kill");
     int res =waitpid(procc_pid,nullptr,WNOHANG); // kill Zombie;
-    std::cout << "before"<<std::endl;
-    std::string cmd_line=smash.getCurrFgCommand()->getCmdLine();
-    std::cout << "after"<<std::endl;
+    std::string cmd_line;
     if ( smash.getCurrFgPid() == -1 || smash.getCurrFgPid() != procc_pid) // external command
     {
        cmd_line = smash.getJobsList()->getJobByPid(procc_pid)->getJobCommand();
     }
-    std::cout << "smash: got an alarm\nsmash" + cmd_line+ " timed out!" << std::endl;
+    else
+    {
+      cmd_line=smash.getCurrFgCommand()->getCmdLine();
+    }
+    std::cout << "smash: got an alarm\nsmash: " + cmd_line+ " timed out!" << std::endl;
   }
 }

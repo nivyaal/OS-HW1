@@ -1,7 +1,2 @@
-does kill should support macro - no create a function that checks the signal validation
-job numbers tamir question 
-where does a process that comes back with SIGCONT comes back fg/bg 
-removing a command from command list after fg command 
-making macro syscall? 
-check that every syscall have perror if failed
-adjusting kill command to signals macro for tests
+timeout / pipe/ redirect with a worng command
+timeout for a dead process
