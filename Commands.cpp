@@ -24,7 +24,7 @@ using namespace std;
 #define CALL_SYS(syscall, syscall_name)                \
   do                                                   \
   {                                                    \
-    if ((syscall) == -1)                               \
+    if (syscall == -1)                               \
     {                                                  \
       string str_for_perror = string("smash error: "); \
       str_for_perror += syscall_name;                  \
@@ -37,7 +37,7 @@ using namespace std;
 //                                                      STRING PARSING FUNCTIONS
 bool isNumber(std::string string)
 {
-  if ((string.find_first_not_of("-0123456789") != -1) || (string == "-"))
+  if ((string.find_first_not_of("-0123456789") != std::string::npos) || (string == "-"))
   {
     return false;
   }
@@ -187,7 +187,7 @@ void SmallShell::executeCommand(const char *cmd_line) {
 //************************************************************************** SMASH ***************************************************************
 // TODO: Add your implementation for classes in Commands.h 
 
-SmallShell::SmallShell() :prompt_name("smash> "),previous_path(""),curr_fg_pid(-1),max_job_id(1),smash_pid(getpid()){};
+SmallShell::SmallShell() :prompt_name("smash> "),previous_path(""),smash_pid(getpid()),curr_fg_pid(-1),max_job_id(1){};
 
 SmallShell::~SmallShell() {
 // TODO: add your implementation
@@ -222,7 +222,6 @@ void JobsList::printJobsList()
     {
         return;
     }
-   int cnt =0;
    for (auto &it : jobs_vector)
    {
         int diff = difftime(time(nullptr),it.getJobTime());
@@ -272,7 +271,7 @@ void JobsList::killAllJobs(bool print_option)
   
   for ( auto& it: jobs_vector)
     {
-      CALL_SYS((kill(it.getJobPid(),9) == -1),"kill");
+      CALL_SYS(kill(it.getJobPid(),9),"kill");
       if (print_option == 1)
       {
         std::cout<<it.getJobPid()<<": "<<it.getJobCommand()<<std::endl;
@@ -300,7 +299,6 @@ void JobsList::removeJobByPid(int jobId)
   {
     if (jobId == it->getJobPid())
     {
-      int jobPid = it->getJobId();
       jobs_vector.erase(it);
       size--;
       if (jobs_vector.size() == 0)
@@ -427,7 +425,7 @@ void KillCommand::execute()
   std::string signal_str = string(args[1]);
   std::string job_id_str = string(args[2]);
   delete[] args;
-  if (!isNumber(signal_str) || !isNumber(job_id_str))
+  if (!isNumber(signal_str) || !isNumber(job_id_str) || signal_str.front() != '-')
   {
     cerr << "smash error: kill: invalid arguments" << endl;
     return;
@@ -440,13 +438,6 @@ void KillCommand::execute()
     cerr << "smash error: kill: job-id " + to_string(job_id) + " does not exist" << endl;
     return;
   }
-
-  if ((signal > 64 || signal <1))
-  {
-    cerr << "smash error: kill: invalid arguments" << endl;
-    return;
-  }
-
 if (kill(job->getJobPid(),signal)  == -1 )
 {
   perror("smash error: kill failed");  
@@ -504,7 +495,6 @@ void ChangeDirCommand::execute()
 
 void CatCommand::execute()
 {
-  SmallShell &smash = SmallShell::getInstance();
   char **args = new char *[COMMAND_MAX_ARGS];
   int num_of_files =   _parseCommandLine(cmd_line, args);
   num_of_files--;
@@ -517,26 +507,24 @@ void CatCommand::execute()
   for (int i=0;i<num_of_files;i++)
   {
     fd = open(args[i+1],O_RDWR);
+    delete[] args;
     if (fd <0)
     {
       perror("smash error: open failed");
-      delete[] args;
       return;
     }
     int read_data;
-    while(read_data = read(fd,&buf,sizeof(buf)) )
+    while(read_data = read(fd,&buf,sizeof(buf)))
     {
       if (read_data == -1)
       {
         perror("smash error: read failed");
-        delete[] args;
         return;
       }
       CALL_SYS(write(STDOUT_FILENO,&buf,1),"write");
     }
     CALL_SYS(close(fd),"close");
   } 
-  delete[] args;
   return;
 }
 
@@ -611,7 +599,6 @@ void BackgroundCommand::execute()
   SmallShell &smash = SmallShell::getInstance();
   char **args = new char *[COMMAND_MAX_ARGS];
   int num_of_args = _parseCommandLine(cmd_line, args);
-  int status;
   JobsList::JobEntry * job;
   if (num_of_args > 2)
   {
@@ -718,7 +705,6 @@ void QuitCommand::execute()
 
 void RedirectionCommand::execute()
 {
-  int *fail_flag = 0;
   SmallShell &smash = SmallShell::getInstance();
   int saved_stdout = dup(STDOUT_FILENO);
   if (saved_stdout == -1 )
@@ -838,7 +824,7 @@ else //son
 time_t TimeOutCommand::getAlarmTime(const char* cmd_line)
 {
   char **args = new char *[COMMAND_MAX_ARGS];
-  int num_of_args =   _parseCommandLine(cmd_line, args);
+  _parseCommandLine(cmd_line, args);
   if (!isNumber(string(args[1])))
   {
     std::cerr<<("smash error: timeout: invalid arguments")<<std::endl;
@@ -965,7 +951,7 @@ bool RedirectionCommand::redirectOneArrow(const char* cmd_line)
 {
   std::string cmd_string = string(cmd_line);
   std::string file_name = _trim(cmd_string.erase(0,cmd_string.find_last_of(">")+1));
-  int fd =open(file_name.c_str(),O_CREAT|O_RDWR, 0666);
+  int fd =open(file_name.c_str(),O_CREAT|O_RDWR , 0666);
   if (fd == -1)
   {
     perror("smash error: open failed");

@@ -251,7 +251,7 @@ class JobsList {
   int max_job_id;
   int size;
  public:
-  JobsList():max_job_id(0),jobs_vector( std::vector<JobEntry>()),size(0){};
+  JobsList():jobs_vector( std::vector<JobEntry>()),max_job_id(0),size(0){};
   ~JobsList(){};
   void addJob(Command* cmd,pid_t job_pid);
   void printJobsList();

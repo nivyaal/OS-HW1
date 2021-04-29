@@ -66,22 +66,24 @@ void ctrlCHandler(int sig_num) {
 
 void alarmHandler(int sig_num) {
  SmallShell &smash = SmallShell::getInstance();
+ smash.getJobsList()->removeFinishedJobs();
   pid_t procc_pid = smash.getAlarmsList()->getLastAlarmPid();
   if (procc_pid == -1)
   {
     return;
   }
   smash.getAlarmsList()->removeLastAlarm();
-  if (kill(procc_pid,0) == -1 ) // in case the process has already ended
+   // kill Zombie;
+  if (smash.getJobsList()->getJobByPid(procc_pid)==nullptr && smash.getCurrFgPid() != procc_pid) // in case the process has already ended
   {
-    int res =waitpid(procc_pid,nullptr,WNOHANG); // kill Zombie;
+    waitpid(procc_pid,nullptr,WNOHANG);
     std::cout << "smash: got an alarm"<<std::endl;
     return;
   }
   else
   {
     CALL_SYS(kill(procc_pid,SIGKILL),"kill");
-    int res =waitpid(procc_pid,nullptr,WNOHANG); // kill Zombie;
+    waitpid(procc_pid,nullptr,WNOHANG); // kill Zombie;
     std::string cmd_line;
     if ( smash.getCurrFgPid() == -1 || smash.getCurrFgPid() != procc_pid) // external command
     {

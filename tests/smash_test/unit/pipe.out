@@ -36,21 +36,24 @@ smash: got ctrl-Z
 smash: got ctrl-C
 Done: 8
 smash> smash> smash> smash error: kill: job-id 1 does not exist
-smash> smash> smash pid issmash: got ctrl-Z
-smash> /tmp/smash_tsmash> smash> smash> signal number 9 was sent to pid 29756
+smash> smash> smash pid issmash> /tmp/smash_tsmash> smash> smash> signal number 9 was sent to pid 24070
 smash> smash error: kill: job-id 2 does not exist
 smash> smash error: kill: job-id 3 does not exist
 smash> smash error: kill: job-id 4 does not exist
 smash> smash error: kill: job-id 5 does not exist
 smash> smash error: kill: job-id 6 does not exist
-smash> smash> signal number 9 was sent to pid 29757
-smash> smash> smash> signal number 9 was sent to pid 29761
-smash> smash> 0
+smash> smash> signal number 9 was sent to pid 24070
+smash> [2] sleep 10 & : 24071 0 secs
+smash> smash> smash error: kill: job-id 1 does not exist
+smash> [2] sleep 10 & : 24071 0 secs
+[3] sleep 10 & : 24075 0 secs
+smash> 0
+smash: got ctrl-Z
 2
 4
 6
 Done: 8
-smash> smash error: fg: jobs list is empty
+smash> sleep 10 & : 24075
 smash> smash error: fg: jobs list is empty
 smash> smash> 0
 2

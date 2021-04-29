@@ -1,4 +1,4 @@
-smash> smash error: kill: job-id 1 does not exist
+smash> smash error: kill: invalid arguments
 smash> smash error: kill: job-id -1 does not exist
 smash> smash error: kill: invalid arguments
 smash> smash error: kill: job-id 1 does not exist
@@ -11,30 +11,33 @@ smash> smash error: kill: invalid arguments
 smash> smash error: kill: invalid arguments
 smash> smash error: kill: invalid arguments
 smash> smash error: kill: invalid arguments
-smash> signal number 9 was sent to pid 29167
+smash> signal number 9 was sent to pid 24158
 smash> smash error: kill: job-id 1 does not exist
-smash> smash> smash> smash error: kill: invalid arguments
-smash> [1] sleep 10& : 29169 0 secs
-smash> smash> [1] sleep 10& : 29169 1 secs
-[2] sleep 5& : 29170 0 secs
-smash> smash> [1] sleep 10& : 29169 2 secs
-[2] sleep 5& : 29170 1 secs
-[3] sleep 3& : 29171 1 secs
+smash> smash> smash> smash error: kill failed: Invalid argument
+smash> [1] sleep 10& : 24160 1 secs
+smash> smash> [1] sleep 10& : 24160 1 secs
+[2] sleep 5& : 24161 0 secs
+smash> smash> [1] sleep 10& : 24160 2 secs
+[2] sleep 5& : 24161 1 secs
+[3] sleep 3& : 24162 1 secs
 smash> smash error: kill: invalid arguments
 smash> smash error: kill: invalid arguments
-smash> smash> smash> [1] sleep 10 & : 29192 3 secs
-smash> signal number 9 was sent to pid 29192
+smash> smash> smash> [1] sleep 10 & : 24183 3 secs
+smash> signal number 9 was sent to pid 24183
 smash> smash> smash> smash> smash: got ctrl-Z
-smash: process 29204 was stopped
-smash> [1] sleep 5& : 29202 0 secs
-[2]           sleep        10   & : 29203 0 secs
-[3] sleep 15 : 29204 0 secs (stopped)
-smash> signal number 9 was sent to pid 29202
-smash> [2]           sleep        10   & : 29203 1 secs
-[3] sleep 15 : 29204 1 secs (stopped)
-smash> signal number 9 was sent to pid 29203
-smash> [3] sleep 15 : 29204 1 secs (stopped)
-smash> signal number 9 was sent to pid 29204
-smash> smash> smash> signal number 19 was sent to pid 29205
-smash> [1] sleep 10& : 29205 2 secs (stopped)
-smash> 
+smash: process 24194 was stopped
+smash> [1] sleep 5& : 24192 1 secs
+[2]           sleep        10   & : 24193 1 secs
+[3] sleep 15 : 24194 0 secs (stopped)
+smash> signal number 9 was sent to pid 24192
+smash> [2]           sleep        10   & : 24193 1 secs
+[3] sleep 15 : 24194 0 secs (stopped)
+smash> signal number 9 was sent to pid 24193
+smash> [3] sleep 15 : 24194 0 secs (stopped)
+smash> signal number 9 was sent to pid 24194
+smash> smash> smash> signal number 19 was sent to pid 24196
+smash> [1] sleep 10& : 24196 3 secs (stopped)
+smash> smash: got ctrl-C
+smash: process 24216 was killed
+smash> signal number 9 was sent to pid 24196
+smash> smash: sending SIGKILL signal to 0 jobs:
