@@ -8,11 +8,11 @@ smash> smash> test_redirect
 smash> smash> again_redirect
 smash> smash> again_redirect
 test_redirect
-smash> smash> smash pid is 38490
-smash> smash> smash pid is 38490
-smash pid is 38490
-smash> smash> smash pid is 38490
-smash pid is 38490
+smash> smash> smash pid is 2237
+smash> smash> smash pid is 2237
+smash pid is 2237
+smash> smash> smash pid is 2237
+smash pid is 2237
 smash> mypid
 my_sleep
 new
@@ -21,7 +21,7 @@ random2.txt
 sub1
 sub2
 sub3
-smash> smash> smash> [1] sleep 100& : 38504 0 secs
+smash> smash> smash> [1] sleep 100& : 2243 1 secs
 smash> smash error: kill: invalid arguments
 smash> smash> smash error: kill: invalid arguments
 smash> smash> k
@@ -159,4 +159,4 @@ smash> 0
 4
 Done: 6
 smash> smash: sending SIGKILL signal to 1 jobs:
-38504: sleep 100&
+2243: sleep 100&

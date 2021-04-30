@@ -735,6 +735,7 @@ void RedirectionCommand::execute()
  { 
    if (redirectOneArrow(this->getCmdLine().c_str()) == false) //  in case redirection failed of any reason
    {
+     CALL_SYS(dup2(saved_stdout,STDOUT_FILENO),"dup2"); 
      return;
    }
  }
@@ -742,6 +743,7 @@ void RedirectionCommand::execute()
  {
    if (redirectTwoArrows((this->getCmdLine()).c_str()) == false ) // in case redireciton failed of any reason
    {
+      CALL_SYS(dup2(saved_stdout,STDOUT_FILENO),"dup2"); 
      return;
    }
  }  //parse command
