@@ -767,6 +767,8 @@ void PipeCommand::execute()
   if (pid_1<0)
   {
    perror("smash error: fork failed");
+    CALL_SYS(close(my_pipe[0]),"close");
+    CALL_SYS(close(my_pipe[1]),"close");
   }
   else if (pid_1==0) //son 1
   {
@@ -780,6 +782,8 @@ void PipeCommand::execute()
   if (pid_2<0)
   {
    perror("smash error: fork failed");
+    CALL_SYS(close(my_pipe[0]),"close");
+    CALL_SYS(close(my_pipe[1]),"close");
   }
   else if (pid_2 == 0) //son 2
   {
