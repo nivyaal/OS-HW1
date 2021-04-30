@@ -514,6 +514,25 @@ void CatCommand::execute()
       return;
     }
     int read_data;
+    do
+    {
+      read_data = read(fd, &buf, sizeof(buf));
+      if(read_data == -1)
+      {
+        perror("smash error: read failed");
+        return;
+      }
+      else if (read_data == 0)
+      {
+        break;
+      }
+      CALL_SYS(write(STDOUT_FILENO,&buf,1),"write");
+    } while (read_data);
+    
+
+
+/*
+    int read_data;
     while(read_data = read(fd,&buf,sizeof(buf)))
     {
       if (read_data == -1)
@@ -522,7 +541,7 @@ void CatCommand::execute()
         return;
       }
       CALL_SYS(write(STDOUT_FILENO,&buf,1),"write");
-    }
+    }*/
     CALL_SYS(close(fd),"close");
   } 
   return;

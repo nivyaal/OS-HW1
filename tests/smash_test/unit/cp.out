@@ -69,19 +69,19 @@ sub2
 sub3
 temp_file
 smash> smash: got ctrl-C
-smash: process 24467 was killed
+smash: process 35944 was killed
 smash> smash> smash: got ctrl-Z
-smash: process 24469 was stopped
-smash> [1] cp /dev/zero /dev/null : 24469 1 secs (stopped)
-smash> cp /dev/zero /dev/null : 24469
-smash> [1] cp /dev/zero /dev/null : 24469 3 secs
-smash> signal number 9 was sent to pid 24469
+smash: process 35946 was stopped
+smash> [1] cp /dev/zero /dev/null : 35946 1 secs (stopped)
+smash> cp /dev/zero /dev/null : 35946
+smash> [1] cp /dev/zero /dev/null : 35946 2 secs
+smash> signal number 9 was sent to pid 35946
 smash> smash> smash: got ctrl-C
-smash: process 24474 was killed
-smash> smash> [1] cp /dev/zero /dev/null& : 24476 0 secs
-smash> cp /dev/zero /dev/null& : 24476
+smash: process 35956 was killed
+smash> smash> [1] cp /dev/zero /dev/null& : 35964 1 secs
+smash> cp /dev/zero /dev/null& : 35964
 smash: got ctrl-C
-smash: process 24476 was killed
+smash: process 35964 was killed
 smash> smash> smash> empty_file
 my_sleep
 new_random1.txt
