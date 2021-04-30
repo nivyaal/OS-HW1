@@ -621,7 +621,7 @@ void BackgroundCommand::execute()
   JobsList::JobEntry * job;
   if (num_of_args > 2)
   {
-    std::cerr<<("smash error: fg: invalid arguments")<<std::endl;
+    std::cerr<<("smash error: bg: invalid arguments")<<std::endl;
     delete[] args;
     return;
   }
@@ -639,7 +639,7 @@ void BackgroundCommand::execute()
   {
     if (!isNumber(string(args[1])))
     {
-      std::cerr<<("smash error: fg: invalid arguments")<<std::endl;
+      std::cerr<<("smash error: bg: invalid arguments")<<std::endl;
       delete[] args;
       return;
     }
