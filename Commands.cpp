@@ -748,7 +748,7 @@ void RedirectionCommand::execute()
    }
  }  //parse command
   std::string cmd_str = string(cmd_line);
-  cmd_str = _trim(cmd_str.erase(cmd_str.find_first_of(">"),cmd_str.size()));
+  cmd_str = _removeBackgroundSign(_trim(cmd_str.erase(cmd_str.find_first_of(">"),cmd_str.size())));
   smash.executeCommand(cmd_str.c_str());
   CALL_SYS(dup2(saved_stdout,STDOUT_FILENO),"dup2"); 
 }
@@ -763,7 +763,7 @@ void PipeCommand::execute()
   {
     w_channel = 2;
   }
-  std::string cmd_str_first = _trim(isolateFirstCommand(this->cmd_line));
+  std::string cmd_str_first = _removeBackgroundSign(_trim(isolateFirstCommand(this->cmd_line)));
   std::string cmd_str_second = _trim(_removeBackgroundSign(isolateSecondCommand(this->cmd_line)));
   int pid_1 = fork();
   if (pid_1<0)
@@ -975,7 +975,7 @@ bool RedirectionCommand::isTwoArrows(const char* cmd_line)
 bool RedirectionCommand::redirectOneArrow(const char* cmd_line)
 {
   std::string cmd_string = string(cmd_line);
-  std::string file_name = _trim(cmd_string.erase(0,cmd_string.find_last_of(">")+1));
+  std::string file_name = _removeBackgroundSign(_trim(cmd_string.erase(0,cmd_string.find_last_of(">")+1)));
   int fd =open(file_name.c_str(),O_CREAT|O_RDWR , 0666);
   if (fd == -1)
   {
@@ -998,7 +998,7 @@ bool RedirectionCommand::redirectOneArrow(const char* cmd_line)
 bool RedirectionCommand::redirectTwoArrows(const char* cmd_line)
 {
   std::string cmd_string = string(cmd_line);
-  std::string file_name = _trim(cmd_string.erase(0,cmd_string.find_last_of(">")+1));
+  std::string file_name = _removeBackgroundSign(_trim(cmd_string.erase(0,cmd_string.find_last_of(">")+1)));
   int fd =open(file_name.c_str(),O_CREAT|O_APPEND|O_RDWR, 0666);
   if (fd == -1)
   {
