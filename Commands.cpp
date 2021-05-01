@@ -700,7 +700,7 @@ void ExternalCommand::execute()
       int index =back_ground_command.find_last_of("&");
       back_ground_command = back_ground_command.erase(index,index+1);
     }
-    setpgrp();
+    CALL_SYS(setpgrp(), "setpgrp");
     execlp("/bin/bash", "bash", "-c", back_ground_command.c_str(), NULL);
     perror("smash error: execlp failed");
     exit(0);
