@@ -1,0 +1,43 @@
+smash> smash error: kill: invalid arguments
+smash> smash error: kill: job-id -1 does not exist
+smash> smash error: kill: invalid arguments
+smash> smash error: kill: job-id 1 does not exist
+smash> smash error: kill: invalid arguments
+smash> smash error: kill: invalid arguments
+smash> smash error: kill: invalid arguments
+smash> smash error: kill: job-id 1 does not exist
+smash> smash> smash error: kill: invalid arguments
+smash> smash error: kill: invalid arguments
+smash> smash error: kill: invalid arguments
+smash> smash error: kill: invalid arguments
+smash> smash error: kill: invalid arguments
+smash> signal number 9 was sent to pid 7551
+smash> smash error: kill: job-id 1 does not exist
+smash> smash> smash> smash error: kill failed: Invalid argument
+smash> [1] sleep 10& : 7553 0 secs
+smash> smash> [1] sleep 10& : 7553 0 secs
+[2] sleep 5& : 7554 0 secs
+smash> smash> [1] sleep 10& : 7553 1 secs
+[2] sleep 5& : 7554 1 secs
+[3] sleep 3& : 7555 1 secs
+smash> smash error: kill: invalid arguments
+smash> smash error: kill: invalid arguments
+smash> smash> smash> [1] sleep 10 & : 7560 3 secs
+smash> signal number 9 was sent to pid 7560
+smash> smash> smash> smash> smash: got ctrl-Z
+smash: process 7565 was stopped
+smash> [1] sleep 5& : 7563 0 secs
+[2]           sleep        10   & : 7564 0 secs
+[3] sleep 15 : 7565 0 secs (stopped)
+smash> signal number 9 was sent to pid 7563
+smash> [2]           sleep        10   & : 7564 0 secs
+[3] sleep 15 : 7565 0 secs (stopped)
+smash> signal number 9 was sent to pid 7564
+smash> [3] sleep 15 : 7565 0 secs (stopped)
+smash> signal number 9 was sent to pid 7565
+smash> smash> smash> signal number 19 was sent to pid 7566
+smash> [1] sleep 10& : 7566 2 secs (stopped)
+smash> smash: got ctrl-C
+smash: process 7573 was killed
+smash> signal number 9 was sent to pid 7566
+smash> smash: sending SIGKILL signal to 0 jobs:

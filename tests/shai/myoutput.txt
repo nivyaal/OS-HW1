@@ -1,0 +1,62 @@
+smash> smash error: cat: not enough arguments
+smash> smash error: open failed: No such file or directory
+smash> smash error: open failed: No such file or directory
+smash> smash> smash> smash> smash> smash> smash> smash> line 1
+line 2
+smash> line 1
+line 2
+line 1
+line 2
+line 3
+line 4
+smash> line 1
+line 2
+line 3
+line 4
+line 1
+line 2
+smash> line 1
+line 2
+line 1
+line 2
+line 3
+line 4
+smash error: open failed: No such file or directory
+smash> line 1
+line 2
+smash error: open failed: No such file or directory
+smash> line 1
+line 2
+line 3
+line 4
+smash error: open failed: No such file or directory
+smash> line 1
+line 2
+line 3
+line 4
+line 1
+line 2
+smash error: open failed: No such file or directory
+smash> smash error: open failed: No such file or directory
+smash> smash error: open failed: No such file or directory
+smash> line 1
+line 2
+line 1
+line 2
+line 3
+line 4
+smash> smash> line 1
+line 2
+smash error: open failed: Permission denied
+smash> smash error: open failed: Permission denied
+smash> line 1
+line 2
+smash error: open failed: Permission denied
+smash> line 1
+line 2
+smash error: open failed: No such file or directory
+smash> smash error: open failed: Permission denied
+smash> smash error: open failed: Permission denied
+smash> smash error: open failed: No such file or directory
+smash> smash error: open failed: No such file or directory
+smash> smash> smash> smash> smash> 

@@ -507,7 +507,6 @@ void CatCommand::execute()
   for (int i=0;i<num_of_files;i++)
   {
     fd = open(args[i+1],O_RDWR);
-    delete[] args;
     if (fd <0)
     {
       perror("smash error: open failed");
@@ -528,8 +527,14 @@ void CatCommand::execute()
       }
       CALL_SYS(write(STDOUT_FILENO,&buf,1),"write");
     } while (read_data);
-    CALL_SYS(close(fd),"close");
+    if (close(fd) == -11)
+    {
+      delete[] args;
+      perror("smash error: close failed");
+      return;
+    }
   } 
+  delete[] args;
   return;
 }
 

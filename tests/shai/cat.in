@@ -1,0 +1,34 @@
+cat
+cat non_existent_file
+cat more arguments
+touch empty
+cat empty
+echo "line 1" > temp.txt
+echo "line 2" >> temp.txt
+cp temp.txt temp2.txt
+echo "line 3" >> temp2.txt
+echo "line 4" >> temp2.txt
+cat temp.txt
+cat temp.txt temp2.txt
+cat temp2.txt temp.txt
+cat temp.txt temp2.txt non_existent_file
+cat temp.txt non_existent_file temp2.txt
+cat temp2.txt non_existent_file temp.txt
+cat temp2.txt temp.txt non_existent_file
+cat non_existent_file temp2.txt temp.txt
+cat non_existent_file temp.txt temp2.txt
+cat          temp.txt                               temp2.txt
+chmod 000 temp2.txt
+cat temp.txt temp2.txt
+cat temp2.txt temp.txt
+cat temp.txt temp2.txt non_existent_file
+cat temp.txt non_existent_file temp2.txt
+cat ./temp2.txt ./non_existent_file ./temp.txt
+cat ./temp2.txt ./temp.txt ./non_existent_file
+cat ./non_existent_file ./temp2.txt ./temp.txt
+cat ./non_existent_file ./temp.txt ./temp2.txt
+chmod 777 temp2.txt
+rm temp.txt
+rm temp2.txt
+rm empty
+quit
