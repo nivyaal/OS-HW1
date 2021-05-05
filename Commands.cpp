@@ -396,13 +396,13 @@ void ChangePromptCommand::execute()
 {
     SmallShell &smash = SmallShell::getInstance();
     char **args = new char *[COMMAND_MAX_ARGS];
-  if (_parseCommandLine(cmd_line, args) == 1)
+  if (_parseCommandLine(cmd_line, args) == 1 || string(args[1]) == "&")
   {
     smash.SetShellPrompt("smash> ");
   } 
   else
   {
-    smash.SetShellPrompt(string(args[1])+"> ");
+    smash.SetShellPrompt(_removeBackgroundSign(string(args[1]))+"> ");
   }
   delete[] args;
   return;
@@ -528,20 +528,6 @@ void CatCommand::execute()
       }
       CALL_SYS(write(STDOUT_FILENO,&buf,1),"write");
     } while (read_data);
-    
-
-
-/*
-    int read_data;
-    while(read_data = read(fd,&buf,sizeof(buf)))
-    {
-      if (read_data == -1)
-      {
-        perror("smash error: read failed");
-        return;
-      }
-      CALL_SYS(write(STDOUT_FILENO,&buf,1),"write");
-    }*/
     CALL_SYS(close(fd),"close");
   } 
   return;
@@ -976,7 +962,7 @@ bool RedirectionCommand::redirectOneArrow(const char* cmd_line)
 {
   std::string cmd_string = string(cmd_line);
   std::string file_name = _removeBackgroundSign(_trim(cmd_string.erase(0,cmd_string.find_last_of(">")+1)));
-  int fd =open(file_name.c_str(),O_CREAT|O_RDWR , 0666);
+  int fd =open(file_name.c_str(),O_CREAT|O_RDWR|O_TRUNC , 0666);
   if (fd == -1)
   {
     perror("smash error: open failed");
