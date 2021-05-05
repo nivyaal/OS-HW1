@@ -704,7 +704,7 @@ void QuitCommand::execute()
   char **args = new char *[COMMAND_MAX_ARGS];
   int num_of_args =   _parseCommandLine(cmd_line, args);
   bool print_option = 0;
-  if (num_of_args == 2 && string(args[1]).compare("kill") == 0)
+  if (num_of_args > 1 && string(args[1]).compare("kill") == 0)
   {
     print_option = 1;
   }
