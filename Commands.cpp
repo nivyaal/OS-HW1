@@ -108,6 +108,10 @@ std::string _removeBackgroundSign(std::string str) {
 */
 Command * SmallShell::CreateCommand(const char* cmd_line) {
   std::string cmd_s = _trim(string(cmd_line));
+  if (cmd_s.empty())
+  {
+    return nullptr;
+  }
   cmd_s = _removeBackgroundSign(cmd_s);
   string firstWord = cmd_s.substr(0, cmd_s.find_first_of(" \n"));
   firstWord = _trim(firstWord);
@@ -177,8 +181,11 @@ void SmallShell::executeCommand(const char *cmd_line) {
   // cmd->execute();
   // Please note that you must fork smash process for some commands (e.g., external commands....)
   this->getJobsList()->removeFinishedJobs();
-
   Command* cmd = CreateCommand(cmd_line);
+  if (cmd ==  nullptr)
+  {
+    return;
+  }
   cmd->execute();
   delete cmd;
 }
